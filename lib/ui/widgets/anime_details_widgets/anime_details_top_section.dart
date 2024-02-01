@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 
-import '../custom_chip.dart';
+import 'custom_chip.dart';
 
 class TopSection extends StatelessWidget {
   final String pictureUri;

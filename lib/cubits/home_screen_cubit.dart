@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikari_kage/dependency_injector.dart';
 
+import '../status.dart';
 import 'home_screen_state.dart';
 
 class HomeScreenCubit extends Cubit<HomeScreenState> {

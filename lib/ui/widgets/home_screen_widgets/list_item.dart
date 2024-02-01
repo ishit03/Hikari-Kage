@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hikari_kage/ui/screens/anime_details.dart';
 
-import '../../models/anime.dart';
+import '../../../models/anime.dart';
 
 class ListItem extends StatelessWidget {
   final Anime anime;

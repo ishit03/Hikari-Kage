@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../custom_chip.dart';
+import 'custom_chip.dart';
 
 class GenreSection extends StatelessWidget {
   final List<String>? genreList;
