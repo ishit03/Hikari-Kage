@@ -1,12 +1,22 @@
+import 'package:hive/hive.dart';
+
 import 'character.dart';
 
+part 'anime.g.dart';
+
+@HiveType(typeId: 1)
 class Anime {
+  @HiveField(0)
   late final int animeId;
+  @HiveField(1)
   late final String title;
+  @HiveField(2)
+  late final String mediumPictureUri;
+  @HiveField(3)
+  late final String largePictureUri;
+
   late final String? synopsis;
   late final List<String>? genre;
-  late final String mediumPictureUri;
-  late final String largePictureUri;
   late final List<Character>? characters;
   late final String? status;
   late final String? rating;

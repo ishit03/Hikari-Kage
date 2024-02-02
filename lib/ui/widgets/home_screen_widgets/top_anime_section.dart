@@ -7,10 +7,10 @@ import '../../../status.dart';
 import 'list_item.dart';
 
 class TopAnimeSection extends StatelessWidget {
-  final String title;
+  final String listTitle;
   final String listKey;
   const TopAnimeSection(
-      {super.key, required this.title, required this.listKey});
+      {super.key, required this.listTitle, required this.listKey});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class TopAnimeSection extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(left: 10, bottom: 5),
           child: Text(
-            title,
+            listTitle,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),

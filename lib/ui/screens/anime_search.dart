@@ -35,6 +35,7 @@ class _AnimeSearchState extends State<AnimeSearch> {
           textInputAction: TextInputAction.search,
           autofocus: true,
           decoration: const InputDecoration(
+              isDense: true,
               hintText: 'Search Anime',
               filled: false,
               border: InputBorder.none,
@@ -100,7 +101,11 @@ class _AnimeSearchState extends State<AnimeSearch> {
       _debounceTimer!.cancel();
     }
     _debounceTimer = Timer(const Duration(seconds: 1), () {
-      callback(query);
+      if (query != null && query.isNotEmpty) {
+        callback(query);
+      } else {
+        _animeSearchCubit.clearState();
+      }
     });
   }
 }

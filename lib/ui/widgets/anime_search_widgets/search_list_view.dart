@@ -27,13 +27,22 @@ class SearchListView extends StatelessWidget {
                 child: Card(
                   child: Row(
                     children: [
-                      Image.network(
-                        animeList[index].mediumPictureUri,
-                        fit: BoxFit.contain,
+                      SizedBox(
+                        width: 70,
+                        child: Image.network(
+                          animeList[index].mediumPictureUri,
+                          fit: BoxFit.fitWidth,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(animeList[index].title),
+                        child: SizedBox(
+                            width: 250,
+                            child: Text(
+                              animeList[index].title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            )),
                       )
                     ],
                   ),

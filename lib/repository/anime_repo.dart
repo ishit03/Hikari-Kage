@@ -3,22 +3,43 @@ import 'dart:convert';
 import 'package:hikari_kage/data/anime_provider.dart';
 import 'package:hikari_kage/models/anime.dart';
 import 'package:hikari_kage/models/character.dart';
+import 'package:hikari_kage/utility/hive_utility.dart';
 
 class AnimeRepo {
   final AnimeProvider _animeProvider = AnimeProvider();
 
   ///Fetch top ranked animes by given type such as Popularity, Currently Airing, All time etc.
   Future<List<Anime>> fetchTopAnimeList(String rankType) async {
-    final jsonMap = await _animeProvider
-        .fetchTopAnime(rankType)
-        .then((value) => jsonDecode(value) as Map<String, dynamic>);
-    if (jsonMap.containsKey('data')) {
-      return (jsonMap['data'] as List)
-          .cast<Map<String, dynamic>>()
-          .map((e) => Anime.fromJson(e['node']))
-          .toList();
+    List<Anime>? cachedList = HiveUtility.checkIfCacheExists(rankType);
+
+    if (cachedList == null || cachedList.isEmpty) {
+      try {
+        final jsonMap = await _animeProvider
+            .fetchTopAnime(rankType)
+            .then((value) => jsonDecode(value) as Map<String, dynamic>);
+
+        if (jsonMap.containsKey('data')) {
+          final animeList = (jsonMap['data'] as List)
+              .cast<Map<String, dynamic>>()
+              .map((e) => Anime.fromJson(e['node']))
+              .toList();
+
+          ///Not a good place to store timestamp of last fetched data
+          ///as this will re-write the same key 4 times
+          ///but with the low latency of Hive shouldn't be a problem
+          ///will optimize this in future
+          HiveUtility.putLastFetchedTimeStamp(DateTime.now());
+
+          HiveUtility.addListToCache(rankType, animeList);
+          return animeList;
+        } else {
+          return [];
+        }
+      } on Exception {
+        return [];
+      }
     } else {
-      return [];
+      return cachedList;
     }
   }
 
@@ -29,7 +50,6 @@ class AnimeRepo {
       fetchTopAnimeList('upcoming'),
       fetchTopAnimeList('bypopularity')
     ]);
-
     return topAnimes;
   }
 

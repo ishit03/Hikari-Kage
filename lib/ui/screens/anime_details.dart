@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hikari_kage/cubits/theme_mode_cubit.dart';
 import 'package:hikari_kage/dependency_injector.dart';
 import 'package:hikari_kage/ui/widgets/anime_details_widgets/anime_details_top_section.dart';
 import 'package:hikari_kage/ui/widgets/anime_details_widgets/characters_list.dart';
@@ -16,16 +18,19 @@ class AnimeDetails extends StatelessWidget {
   final _controller = ScrollController();
   @override
   Widget build(BuildContext context) {
+    final currentTheme = context.read<ThemeModeCubit>().state;
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
-          color: Colors.white,
           image: DecorationImage(
               image: NetworkImage(backgroundImage),
               fit: BoxFit.fill,
               colorFilter: ColorFilter.mode(
-                  Colors.white.withOpacity(0.9), BlendMode.srcATop))),
+                  (currentTheme == Modes.light)
+                      ? Colors.white.withOpacity(0.9)
+                      : Colors.black.withOpacity(0.9),
+                  BlendMode.srcATop))),
       child: FutureBuilder(
         future: DependencyInjector()
             .getAnimeRepoInstance
