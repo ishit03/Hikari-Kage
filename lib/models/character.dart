@@ -10,7 +10,9 @@ class Character {
       firstName: jsonData['node']['first_name'],
       lastName: jsonData['node']['last_name'],
       role: jsonData['role'],
-      pictureUri: jsonData['node']['main_picture']['medium']);
+      pictureUri: (jsonData['node'].containsKey('main_picture'))
+          ? jsonData['node']['main_picture']['medium']
+          : null);
 
   @override
   String toString() {

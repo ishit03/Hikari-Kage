@@ -45,7 +45,7 @@ class AnimeDetails extends StatelessWidget {
             return SingleChildScrollView(
                 controller: _controller,
                 child: animeDetailsUI(context, animeData));
-          } else if (snapshot.hasError) {
+          } else if (snapshot.hasError || !snapshot.hasData) {
             return Center(
               child: Text(
                 'Something went wrong :(',

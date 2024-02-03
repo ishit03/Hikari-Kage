@@ -29,21 +29,32 @@ class CharactersList extends StatelessWidget {
                       Expanded(
                         flex: 3,
                         child: Card(
-                          child: Image.network(
-                            charactersList?[index].pictureUri ?? '',
-                            fit: BoxFit.contain,
-                          ),
+                          child: (charactersList?[index].pictureUri != null)
+                              ? Image.network(
+                                  charactersList?[index].pictureUri ?? '',
+                                  fit: BoxFit.contain,
+                                )
+                              : const SizedBox.shrink(),
                         ),
                       ),
                       Flexible(
                         flex: 1,
                         child: Text(
                           '${charactersList?[index].firstName} ${charactersList?[index].lastName}',
+                          maxLines: 2,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.labelLarge,
                         ),
-                      )
+                      ),
+                      Flexible(
+                          flex: 1,
+                          child: Text(
+                            '(${charactersList?[index].role})',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.labelLarge,
+                          )),
                     ],
                   );
                 }),
