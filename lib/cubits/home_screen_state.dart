@@ -1,21 +1,23 @@
 import '../models/anime.dart';
 import '../status.dart';
 
-class HomeScreenState {
+abstract class HomeScreenState {}
+
+class AnimeScreenState extends HomeScreenState {
   final Status status;
   final List<Anime>? topAll;
   final List<Anime>? topAiring;
   final List<Anime>? upcomingAnime;
   final List<Anime>? mostPopular;
 
-  HomeScreenState(
+  AnimeScreenState(
       {required this.status,
       this.topAll,
       this.topAiring,
       this.upcomingAnime,
       this.mostPopular});
 
-  static HomeScreenState initial() => HomeScreenState(status: Status.initial);
+  static AnimeScreenState initial() => AnimeScreenState(status: Status.initial);
 
   List<Anime> fetchList(String key) {
     switch (key) {
@@ -32,3 +34,7 @@ class HomeScreenState {
     }
   }
 }
+
+class UserWatchlistState extends HomeScreenState {}
+
+class MangaScreenState extends HomeScreenState {}

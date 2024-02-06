@@ -27,37 +27,41 @@ class TopAnimeSection extends StatelessWidget {
         ),
         BlocBuilder<HomeScreenCubit, HomeScreenState>(
             builder: (context, state) {
-          if (state.status == Status.initial) {
-            context.read<HomeScreenCubit>().loadData();
-            return const SizedBox.shrink();
-          } else if (state.status == Status.loading) {
-            return const SizedBox(
-              height: 200,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          } else if (state.status == Status.loaded) {
-            final animeList = state.fetchList(listKey);
-            return SizedBox(
-              height: 200,
-              child: (animeList.isEmpty)
-                  ? const Center(
-                      child: Text('Something went wrong'),
-                    )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: animeList.length,
-                      itemExtent: 110,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return ListItem(anime: animeList[index]);
-                      }),
-            );
+          if (state is AnimeScreenState) {
+            if (state.status == Status.initial) {
+              context.read<HomeScreenCubit>().loadData();
+              return const SizedBox.shrink();
+            } else if (state.status == Status.loading) {
+              return const SizedBox(
+                height: 200,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else if (state.status == Status.loaded) {
+              final animeList = state.fetchList(listKey);
+              return SizedBox(
+                height: 200,
+                child: (animeList.isEmpty)
+                    ? const Center(
+                        child: Text('Something went wrong'),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: animeList.length,
+                        itemExtent: 110,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return ListItem(anime: animeList[index]);
+                        }),
+              );
+            } else {
+              return const Center(
+                child: Text('Something went wrong'),
+              );
+            }
           } else {
-            return const Center(
-              child: Text('Something went wrong'),
-            );
+            return const SizedBox.shrink();
           }
         }),
       ],

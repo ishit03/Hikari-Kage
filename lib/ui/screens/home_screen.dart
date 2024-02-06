@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikari_kage/cubits/home_screen_cubit.dart';
 import 'package:hikari_kage/cubits/theme_mode_cubit.dart';
+import 'package:hikari_kage/ui/screens/anime_screen.dart';
 import 'package:hikari_kage/ui/screens/anime_search.dart';
-import 'package:hikari_kage/ui/widgets/home_screen_widgets/top_anime_section.dart';
+import 'package:hikari_kage/ui/screens/user_watch_list_screen.dart';
+import 'package:hikari_kage/ui/widgets/hikari_kage_bottom_nav.dart';
+
+import '../../cubits/home_screen_state.dart';
+import 'manga_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  static final ScrollController _scrollController = ScrollController();
+  final HomeScreenCubit _homeScreenCubit = HomeScreenCubit();
+
+  static void addListener(Function(ScrollDirection) callback) {
+    _scrollController.addListener(() {
+      final direction = _scrollController.position.userScrollDirection;
+      if (direction != ScrollDirection.idle) {
+        callback(direction);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,28 +56,50 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         body: BlocProvider(
-          create: (_) => HomeScreenCubit(),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const TopAnimeSection(
-                    listTitle: 'Top Airing', listKey: 'topAiring'),
-                const TopAnimeSection(
-                    listTitle: 'Top Anime', listKey: 'topAll'),
-                const TopAnimeSection(
-                    listTitle: 'Upcoming Anime', listKey: 'upcomingAnime'),
-                const TopAnimeSection(
-                    listTitle: 'Most Popular', listKey: 'mostPopular'),
-                Center(
-                  child: Text(
-                    'Powered by MAL',
-                    style: Theme.of(context).textTheme.headlineSmall,
+            create: (_) => _homeScreenCubit,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Stack(children: [
+                SingleChildScrollView(
+                    controller: _scrollController,
+                    child: BlocBuilder(
+                      bloc: _homeScreenCubit,
+                      builder: (BuildContext context, state) {
+                        switch (state) {
+                          case AnimeScreenState():
+                            return const AnimeScreen();
+                          case UserWatchlistState():
+                            return const UserWatchListScreen();
+                          case MangaScreenState():
+                            return const MangaScreen();
+                          default:
+                            return const SizedBox.shrink();
+                        }
+                      },
+                    )),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: HikariKageBottomNav(
+                      onTap: (index) {
+                        switch (index) {
+                          case 0:
+                            _homeScreenCubit.loadMangaScreenState();
+                            break;
+                          case 1:
+                            _homeScreenCubit.loadAnimeScreenState();
+                            break;
+                          case 2:
+                            _homeScreenCubit.loadUserWatchlistState();
+                            break;
+                        }
+                      },
+                    ),
                   ),
                 )
-              ],
-            ),
-          ),
-        ));
+              ]),
+            )));
   }
 }

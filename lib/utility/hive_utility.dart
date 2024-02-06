@@ -4,18 +4,14 @@ import '../models/anime.dart';
 
 class HiveUtility {
   static late final Box _cacheBox;
-  static late final Box<String> _themeModeBox;
-
   static Future<void> initializeHive() async {
     await Hive.initFlutter();
     Hive.registerAdapter(AnimeAdapter());
     _cacheBox = await Hive.openBox('cacheBox');
-    _themeModeBox = await Hive.openBox('themeModeBox');
   }
 
   static void closeBoxes() {
     _cacheBox.close();
-    _themeModeBox.close();
   }
 
   ///Utility for caching api responses
@@ -37,8 +33,8 @@ class HiveUtility {
   static DateTime? get getLastFetchedTimeStamp => _cacheBox.get('timestamp');
 
   ///Utility for Theme mode
-  static String? get getPreferredThemeMode => _themeModeBox.get('themeMode');
+  static String? get getPreferredThemeMode => _cacheBox.get('themeMode');
 
   static set setPreferredThemeMode(String mode) =>
-      _themeModeBox.put('themeMode', mode);
+      _cacheBox.put('themeMode', mode);
 }

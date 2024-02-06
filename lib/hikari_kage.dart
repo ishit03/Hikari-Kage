@@ -29,7 +29,7 @@ class _HikariKageState extends State<HikariKage> {
       create: (_) => _themeModeCubit,
       child: BlocBuilder<ThemeModeCubit, Modes>(builder: (context, state) {
         return MaterialApp(
-          home: const HomeScreen(),
+          home: HomeScreen(),
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: (state == Modes.light) ? ThemeMode.light : ThemeMode.dark,
