@@ -1,11 +1,40 @@
+import 'package:hikari_kage/models/character.dart';
 import 'package:hive/hive.dart';
-
-import 'character.dart';
 
 part 'anime.g.dart';
 
 @HiveType(typeId: 1)
 class Anime {
+  Anime(
+      {required this.animeId,
+      required this.title,
+      required this.mediumPictureUri,
+      required this.largePictureUri,
+      this.synopsis,
+      this.genre,
+      this.characters,
+      this.status,
+      this.rating,
+      this.rank,
+      this.mean,
+      this.studio,
+      this.mediaType});
+
+  factory Anime.fromJson(Map<String, dynamic> jsonData) => Anime(
+      animeId: jsonData['id'] as int,
+      title: jsonData['title'] as String,
+      synopsis: jsonData['synopsis'] as String,
+      genre: jsonData['genres'] as List<String>,
+      mediumPictureUri: jsonData['main_picture']['medium'] as String,
+      largePictureUri: jsonData['main_picture']['large'] as String,
+      status: jsonData['status'] as String,
+      rating: (jsonData['rating'] as String?)?.toUpperCase() ?? 'N/A',
+      rank: jsonData['rank'] as int,
+      mean: jsonData['mean'] as double,
+      studio: jsonData['studios'] as String,
+      mediaType: (jsonData['media_type'] as String?)?.toUpperCase() ?? 'N/A',
+      characters: jsonData['characters'] as List<Character>);
+
   @HiveField(0)
   late final int animeId;
   @HiveField(1)
@@ -24,36 +53,6 @@ class Anime {
   late final double? mean;
   late final String? studio;
   late final String? mediaType;
-
-  Anime(
-      {required this.animeId,
-      required this.title,
-      this.synopsis,
-      this.genre,
-      required this.mediumPictureUri,
-      required this.largePictureUri,
-      this.characters,
-      this.status,
-      this.rating,
-      this.rank,
-      this.mean,
-      this.studio,
-      this.mediaType});
-
-  factory Anime.fromJson(Map<String, dynamic> jsonData) => Anime(
-      animeId: jsonData['id'],
-      title: jsonData['title'],
-      synopsis: jsonData['synopsis'],
-      genre: jsonData['genres'],
-      mediumPictureUri: jsonData['main_picture']['medium'],
-      largePictureUri: jsonData['main_picture']['large'],
-      status: jsonData['status'],
-      rating: (jsonData['rating'] as String?)?.toUpperCase() ?? 'N/A',
-      rank: jsonData['rank'],
-      mean: jsonData['mean'],
-      studio: jsonData['studios'],
-      mediaType: (jsonData['media_type'] as String?)?.toUpperCase() ?? 'N/A',
-      characters: jsonData['characters']);
 
   @override
   String toString() {

@@ -1,19 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikari_kage/cubits/anime_search_state.dart';
-import 'package:hikari_kage/dependency_injector.dart';
-
-import '../models/anime.dart';
-import '../repository/anime_repo.dart';
-import '../status.dart';
+import 'package:hikari_kage/repository/anime_repo.dart';
+import 'package:hikari_kage/status.dart';
 
 class AnimeSearchCubit extends Cubit<AnimeSearchState> {
   AnimeSearchCubit() : super(AnimeSearchState(state: Status.initial));
 
-  final AnimeRepo _animeRepo = DependencyInjector().getAnimeRepoInstance;
+  final AnimeRepo _animeRepo = AnimeRepo();
 
-  void fetchSearchQuery(String query) async {
+  Future<void> fetchSearchQuery(String query) async {
     emit(AnimeSearchState(state: Status.loading));
-    final List<Anime> searchList = await _animeRepo.fetchAnimeByName(query);
+    final searchList = await _animeRepo.fetchAnimeByName(query);
     if (searchList.isEmpty) {
       emit(AnimeSearchState(state: Status.error));
     } else {

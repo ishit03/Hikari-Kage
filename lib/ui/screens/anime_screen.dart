@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/home_screen_widgets/top_anime_section.dart';
+import 'package:hikari_kage/ui/widgets/home_screen_widgets/top_anime_section.dart';
 
 class AnimeScreen extends StatelessWidget {
   const AnimeScreen({super.key});

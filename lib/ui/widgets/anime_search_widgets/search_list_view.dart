@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hikari_kage/models/anime.dart';
 import 'package:hikari_kage/ui/screens/anime_details.dart';
 
-import '../../../models/anime.dart';
-
 class SearchListView extends StatelessWidget {
+  const SearchListView({required this.animeList, super.key});
   final List<Anime> animeList;
-  const SearchListView({super.key, required this.animeList});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -20,10 +19,12 @@ class SearchListView extends StatelessWidget {
             itemExtent: 100,
             itemBuilder: (context, index) {
               return InkWell(
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => AnimeDetails(
-                        animeId: animeList[index].animeId,
-                        backgroundImage: animeList[index].largePictureUri))),
+                onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute<dynamic>(
+                        builder: (context) => AnimeDetails(
+                            animeId: animeList[index].animeId,
+                            backgroundImage:
+                                animeList[index].largePictureUri))),
                 child: Card(
                   child: Row(
                     children: [
@@ -35,7 +36,7 @@ class SearchListView extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8),
                         child: SizedBox(
                             width: 250,
                             child: Text(

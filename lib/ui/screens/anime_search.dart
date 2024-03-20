@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikari_kage/cubits/anime_search_cubit.dart';
 import 'package:hikari_kage/cubits/anime_search_state.dart';
+import 'package:hikari_kage/status.dart';
 import 'package:hikari_kage/ui/widgets/anime_search_widgets/search_list_view.dart';
-
-import '../../status.dart';
 
 class AnimeSearch extends StatefulWidget {
   const AnimeSearch({super.key});

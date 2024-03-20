@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'custom_chip.dart';
+import 'package:hikari_kage/ui/widgets/anime_details_widgets/custom_chip.dart';
 
 class GenreSection extends StatelessWidget {
+  const GenreSection({required this.genreList, super.key});
   final List<String>? genreList;
-  const GenreSection({super.key, required this.genreList});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +11,7 @@ class GenreSection extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikari_kage/cubits/home_screen_cubit.dart';
+import 'package:hikari_kage/cubits/home_screen_state.dart';
 import 'package:hikari_kage/cubits/theme_mode_cubit.dart';
 import 'package:hikari_kage/ui/screens/anime_screen.dart';
 import 'package:hikari_kage/ui/screens/anime_search.dart';
+import 'package:hikari_kage/ui/screens/manga_screen.dart';
 import 'package:hikari_kage/ui/screens/user_watch_list_screen.dart';
 import 'package:hikari_kage/ui/widgets/hikari_kage_bottom_nav.dart';
-
-import '../../cubits/home_screen_state.dart';
-import 'manga_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -17,7 +16,7 @@ class HomeScreen extends StatelessWidget {
   static final ScrollController _scrollController = ScrollController();
   final HomeScreenCubit _homeScreenCubit = HomeScreenCubit();
 
-  static void addListener(Function(ScrollDirection) callback) {
+  static void addListener(void Function(ScrollDirection) callback) {
     _scrollController.addListener(() {
       final direction = _scrollController.position.userScrollDirection;
       if (direction != ScrollDirection.idle) {
@@ -38,15 +37,14 @@ class HomeScreen extends StatelessWidget {
             IconButton(
                 icon: const Icon(Icons.search, size: 20),
                 onPressed: () {
-                  Navigator.of(context).push(PageRouteBuilder(
+                  Navigator.of(context).push(PageRouteBuilder<dynamic>(
                       pageBuilder: (context, _, __) => const AnimeSearch(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) =>
                               FadeTransition(
                                 opacity: animation,
                                 child: child,
-                              ),
-                      transitionDuration: const Duration(milliseconds: 300)));
+                              )));
                 }),
             IconButton(
                 onPressed: () => context.read<ThemeModeCubit>().changeTheme(),
@@ -81,19 +79,16 @@ class HomeScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8),
                     child: HikariKageBottomNav(
                       onTap: (index) {
                         switch (index) {
                           case 0:
                             _homeScreenCubit.loadMangaScreenState();
-                            break;
                           case 1:
                             _homeScreenCubit.loadAnimeScreenState();
-                            break;
                           case 2:
                             _homeScreenCubit.loadUserWatchlistState();
-                            break;
                         }
                       },
                     ),

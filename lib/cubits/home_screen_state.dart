@@ -1,15 +1,9 @@
-import '../models/anime.dart';
-import '../status.dart';
+import 'package:hikari_kage/models/anime.dart';
+import 'package:hikari_kage/status.dart';
 
 abstract class HomeScreenState {}
 
 class AnimeScreenState extends HomeScreenState {
-  final Status status;
-  final List<Anime>? topAll;
-  final List<Anime>? topAiring;
-  final List<Anime>? upcomingAnime;
-  final List<Anime>? mostPopular;
-
   AnimeScreenState(
       {required this.status,
       this.topAll,
@@ -17,7 +11,13 @@ class AnimeScreenState extends HomeScreenState {
       this.upcomingAnime,
       this.mostPopular});
 
-  static AnimeScreenState initial() => AnimeScreenState(status: Status.initial);
+  factory AnimeScreenState.initial() =>
+      AnimeScreenState(status: Status.initial);
+  final Status status;
+  final List<Anime>? topAll;
+  final List<Anime>? topAiring;
+  final List<Anime>? upcomingAnime;
+  final List<Anime>? mostPopular;
 
   List<Anime> fetchList(String key) {
     switch (key) {

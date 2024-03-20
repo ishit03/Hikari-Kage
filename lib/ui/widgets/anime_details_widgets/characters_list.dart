@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-
-import '../../../models/character.dart';
+import 'package:hikari_kage/models/character.dart';
 
 class CharactersList extends StatelessWidget {
+  const CharactersList({required this.charactersList, super.key});
   final List<Character>? charactersList;
-  const CharactersList({super.key, required this.charactersList});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -38,7 +37,6 @@ class CharactersList extends StatelessWidget {
                         ),
                       ),
                       Flexible(
-                        flex: 1,
                         child: Text(
                           '${charactersList?[index].firstName} ${charactersList?[index].lastName}',
                           maxLines: 2,
@@ -48,13 +46,12 @@ class CharactersList extends StatelessWidget {
                         ),
                       ),
                       Flexible(
-                          flex: 1,
                           child: Text(
-                            '(${charactersList?[index].role})',
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.labelLarge,
-                          )),
+                        '(${charactersList?[index].role})',
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      )),
                     ],
                   );
                 }),

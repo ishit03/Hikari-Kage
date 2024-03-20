@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hikari_kage/models/anime.dart';
 import 'package:hikari_kage/ui/screens/anime_details.dart';
 
-import '../../../models/anime.dart';
-
 class ListItem extends StatelessWidget {
+  const ListItem({required this.anime, super.key});
   final Anime anime;
-  const ListItem({super.key, required this.anime});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute<dynamic>(
               builder: (context) => AnimeDetails(
                   animeId: anime.animeId,
                   backgroundImage: anime.largePictureUri)));
@@ -28,7 +27,6 @@ class ListItem extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 1,
               child: Container(
                 margin: const EdgeInsets.only(top: 10),
                 child: Text(

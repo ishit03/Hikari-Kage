@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomDotIndicator extends StatefulWidget {
+  const CustomDotIndicator({required this.currentIndex, super.key});
   final int currentIndex;
-
-  const CustomDotIndicator({super.key, required this.currentIndex});
 
   @override
   State<CustomDotIndicator> createState() => _CustomDotIndicatorState();
@@ -21,7 +20,7 @@ class _CustomDotIndicatorState extends State<CustomDotIndicator> {
             mainAxisSize: MainAxisSize.min,
             children: listTitle
                 .map((title) {
-                  int index = listTitle.indexOf(title);
+                  final index = listTitle.indexOf(title);
                   return Container(
                       constraints:
                           const BoxConstraints(minHeight: 10, minWidth: 10),

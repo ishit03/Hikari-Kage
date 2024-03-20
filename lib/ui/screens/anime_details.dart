@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikari_kage/cubits/theme_mode_cubit.dart';
-import 'package:hikari_kage/dependency_injector.dart';
+import 'package:hikari_kage/models/anime.dart';
+import 'package:hikari_kage/repository/anime_repo.dart';
 import 'package:hikari_kage/ui/widgets/anime_details_widgets/anime_details_top_section.dart';
 import 'package:hikari_kage/ui/widgets/anime_details_widgets/characters_list.dart';
 import 'package:hikari_kage/ui/widgets/anime_details_widgets/genre_section.dart';
 import 'package:hikari_kage/ui/widgets/anime_details_widgets/synopsis_section.dart';
 
-import '../../models/anime.dart';
-
 class AnimeDetails extends StatelessWidget {
+  AnimeDetails(
+      {required this.animeId, required this.backgroundImage, super.key});
   final int animeId;
   final String backgroundImage;
-  AnimeDetails(
-      {super.key, required this.animeId, required this.backgroundImage});
 
   final _controller = ScrollController();
   @override
@@ -32,16 +31,14 @@ class AnimeDetails extends StatelessWidget {
                       : Colors.black.withOpacity(0.9),
                   BlendMode.srcATop))),
       child: FutureBuilder(
-        future: DependencyInjector()
-            .getAnimeRepoInstance
-            .fetchAnimeDetails(animeId),
-        builder: (context, AsyncSnapshot snapshot) {
+        future: AnimeRepo().fetchAnimeDetails(animeId),
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasData) {
-            final Anime animeData = snapshot.data;
+            final animeData = snapshot.data!;
             return SingleChildScrollView(
                 controller: _controller,
                 child: animeDetailsUI(context, animeData));
@@ -79,7 +76,7 @@ class AnimeDetails extends StatelessWidget {
           rating: animeData.rating,
         ),
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(5),
           child: SizedBox(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

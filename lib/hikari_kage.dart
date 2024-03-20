@@ -18,7 +18,7 @@ class _HikariKageState extends State<HikariKage> {
   @override
   void initState() {
     super.initState();
-    final String mode = HiveUtility.getPreferredThemeMode ?? 'light';
+    final mode = HiveUtility.getPreferredThemeMode ?? 'light';
     prefMode = (mode == 'light') ? Modes.light : Modes.dark;
     _themeModeCubit = ThemeModeCubit(prefMode);
   }

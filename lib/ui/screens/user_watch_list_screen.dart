@@ -13,9 +13,9 @@ class UserWatchListScreen extends StatefulWidget {
 class _UserWatchListScreenState extends State<UserWatchListScreen> {
   @override
   Widget build(BuildContext context) {
-    bool isSwiped = false;
+    var isSwiped = false;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,

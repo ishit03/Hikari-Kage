@@ -1,10 +1,20 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-
-import 'custom_chip.dart';
+import 'package:hikari_kage/ui/widgets/anime_details_widgets/custom_chip.dart';
 
 class TopSection extends StatelessWidget {
+  const TopSection(
+      {required this.pictureUri,
+      required this.title,
+      required this.mediaType,
+      required this.studio,
+      required this.rating,
+      required this.status,
+      required this.rank,
+      required this.mean,
+      super.key});
+
   final String pictureUri;
   final String title;
   final String? mediaType;
@@ -14,23 +24,12 @@ class TopSection extends StatelessWidget {
   final int? rank;
   final double? mean;
 
-  const TopSection(
-      {super.key,
-      required this.pictureUri,
-      required this.title,
-      required this.mediaType,
-      required this.studio,
-      required this.rating,
-      required this.status,
-      required this.rank,
-      required this.mean});
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.bottomCenter,
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: const EdgeInsets.only(top: 50),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -57,11 +56,11 @@ class TopSection extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10.0),
+                padding: const EdgeInsets.only(top: 10),
                 child: SizedBox(
                   width: 200,
                   child: Wrap(
-                    spacing: 5.0,
+                    spacing: 5,
                     children: [
                       CustomChip(
                         text: '#$rank',

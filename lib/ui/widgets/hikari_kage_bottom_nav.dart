@@ -3,9 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:hikari_kage/ui/screens/home_screen.dart';
 
 class HikariKageBottomNav extends StatefulWidget {
+  const HikariKageBottomNav({required this.onTap, super.key});
   final void Function(int index) onTap;
-
-  const HikariKageBottomNav({super.key, required this.onTap});
 
   @override
   State<HikariKageBottomNav> createState() => _HikariKageBottomNavState();
@@ -62,7 +61,7 @@ class _HikariKageBottomNavState extends State<HikariKageBottomNav>
             mainAxisSize: MainAxisSize.min,
             children: navIcons
                 .map((icon) {
-                  int index = navIcons.indexOf(icon);
+                  final index = navIcons.indexOf(icon);
                   return Flexible(
                     child: IconButton(
                       onPressed: () {

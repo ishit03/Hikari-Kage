@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikari_kage/cubits/home_screen_cubit.dart';
-
-import '../../../cubits/home_screen_state.dart';
-import '../../../status.dart';
-import 'list_item.dart';
+import 'package:hikari_kage/cubits/home_screen_state.dart';
+import 'package:hikari_kage/status.dart';
+import 'package:hikari_kage/ui/widgets/home_screen_widgets/list_item.dart';
 
 class TopAnimeSection extends StatelessWidget {
+  const TopAnimeSection(
+      {required this.listTitle, required this.listKey, super.key});
   final String listTitle;
   final String listKey;
-  const TopAnimeSection(
-      {super.key, required this.listTitle, required this.listKey});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
           margin: const EdgeInsets.only(left: 10, bottom: 5),
