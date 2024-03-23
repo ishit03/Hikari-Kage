@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hikari_kage/cubits/home_screen_cubit.dart';
 import 'package:hikari_kage/cubits/theme_mode_cubit.dart';
 import 'package:hikari_kage/theme.dart';
 import 'package:hikari_kage/ui/screens/home_screen.dart';
@@ -25,11 +26,14 @@ class _HikariKageState extends State<HikariKage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _themeModeCubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => ThemeModeCubit(prefMode)),
+        BlocProvider(create: (_) => HomeScreenCubit()),
+      ],
       child: BlocBuilder<ThemeModeCubit, Modes>(builder: (context, state) {
         return MaterialApp(
-          home: HomeScreen(),
+          home: const HomeScreen(),
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: (state == Modes.light) ? ThemeMode.light : ThemeMode.dark,

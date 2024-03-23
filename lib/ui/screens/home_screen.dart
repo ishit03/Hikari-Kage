@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikari_kage/cubits/home_screen_cubit.dart';
 import 'package:hikari_kage/cubits/home_screen_state.dart';
@@ -11,19 +10,9 @@ import 'package:hikari_kage/ui/screens/user_watch_list_screen.dart';
 import 'package:hikari_kage/ui/widgets/general_widgets/hikari_kage_bottom_nav.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   static final ScrollController _scrollController = ScrollController();
-  final HomeScreenCubit _homeScreenCubit = HomeScreenCubit();
-
-  static void addListener(void Function(ScrollDirection) callback) {
-    _scrollController.addListener(() {
-      final direction = _scrollController.position.userScrollDirection;
-      if (direction != ScrollDirection.idle) {
-        callback(direction);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,48 +45,48 @@ class HomeScreen extends StatelessWidget {
                 }),
           ],
         ),
-        body: BlocProvider(
-            create: (_) => _homeScreenCubit,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Stack(children: [
-                SingleChildScrollView(
-                    controller: _scrollController,
-                    child: BlocBuilder(
-                      bloc: _homeScreenCubit,
-                      builder: (BuildContext context, state) {
-                        switch (state) {
-                          case AnimeScreenState():
-                            return const AnimeScreen();
-                          case UserWatchlistState():
-                            return const UserWatchListScreen();
-                          case MangaScreenState():
-                            return const MangaScreen();
-                          default:
-                            return const SizedBox.shrink();
-                        }
-                      },
-                    )),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: HikariKageBottomNav(
-                      onTap: (index) {
-                        switch (index) {
-                          case 0:
-                            _homeScreenCubit.loadMangaScreenState();
-                          case 1:
-                            _homeScreenCubit.loadAnimeScreenState();
-                          case 2:
-                            _homeScreenCubit.loadUserWatchlistState();
-                        }
-                      },
-                    ),
-                  ),
-                )
-              ]),
-            )));
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Stack(children: [
+            SingleChildScrollView(
+                controller: _scrollController,
+                child: BlocBuilder<HomeScreenCubit, HomeScreenState>(
+                  builder: (BuildContext context, state) {
+                    switch (state) {
+                      case AnimeScreenState():
+                        return const AnimeScreen();
+                      case UserWatchlistState():
+                        return const UserWatchListScreen();
+                      case MangaScreenState():
+                        return const MangaScreen();
+                      default:
+                        return const SizedBox.shrink();
+                    }
+                  },
+                )),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: HikariKageBottomNav(
+                  scrollController: _scrollController,
+                  onTap: (index) {
+                    switch (index) {
+                      case 0:
+                        context.read<HomeScreenCubit>().loadMangaScreenState();
+                      case 1:
+                        context.read<HomeScreenCubit>().loadAnimeScreenState();
+                      case 2:
+                        context
+                            .read<HomeScreenCubit>()
+                            .loadUserWatchlistState();
+                    }
+                  },
+                ),
+              ),
+            )
+          ]),
+        ));
   }
 }

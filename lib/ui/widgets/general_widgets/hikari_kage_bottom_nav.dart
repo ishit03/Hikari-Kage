@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:hikari_kage/ui/screens/home_screen.dart';
 
 class HikariKageBottomNav extends StatefulWidget {
-  const HikariKageBottomNav({required this.onTap, super.key});
+  const HikariKageBottomNav(
+      {required this.onTap, required this.scrollController, super.key});
   final void Function(int index) onTap;
+  final ScrollController scrollController;
 
   @override
   State<HikariKageBottomNav> createState() => _HikariKageBottomNavState();
@@ -21,23 +22,23 @@ class _HikariKageBottomNavState extends State<HikariKageBottomNav>
   void initState() {
     super.initState();
     animationController = AnimationController(
-        vsync: this,
-        duration: const Duration(
-            milliseconds:
-                500)) //, reverseDuration: const Duration(milliseconds: 500))
+        vsync: this, duration: const Duration(milliseconds: 800))
       ..addListener(() {
         setState(() {});
       });
 
-    animation = Tween<Offset>(begin: Offset.zero, end: const Offset(0, 20))
+    animation = Tween<Offset>(begin: Offset.zero, end: const Offset(0, 10))
         .animate(CurvedAnimation(
-            parent: animationController, curve: Curves.decelerate));
+            parent: animationController, curve: Curves.easeInOut));
 
-    HomeScreen.addListener((direction) {
-      if (direction == ScrollDirection.forward) {
-        showBottomNav();
-      } else if (direction == ScrollDirection.reverse) {
-        hideBottomNav();
+    widget.scrollController.addListener(() {
+      final direction = widget.scrollController.position.userScrollDirection;
+      if (direction != ScrollDirection.idle) {
+        if (direction == ScrollDirection.forward) {
+          showBottomNav();
+        } else if (direction == ScrollDirection.reverse) {
+          hideBottomNav();
+        }
       }
     });
   }
@@ -52,10 +53,16 @@ class _HikariKageBottomNavState extends State<HikariKageBottomNav>
       position: animation,
       child: Container(
         width: 250,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
             color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-            borderRadius: BorderRadius.circular(50)),
+            borderRadius: BorderRadius.circular(50),
+            //border: Border.all(color: Theme.of(context).shadowColor, width: .2),
+            boxShadow: [
+              BoxShadow(
+                  offset: const Offset(0, .3),
+                  blurRadius: .5,
+                  color: Theme.of(context).shadowColor)
+            ]),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.min,
