@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CustomChip extends StatelessWidget {
-  const CustomChip({required this.text, super.key, this.tooltipText});
+  const CustomChip(
+      {required this.text, super.key, this.margin, this.tooltipText});
   final String text;
   final String? tooltipText;
+  final EdgeInsets? margin;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class CustomChip extends StatelessWidget {
       triggerMode: TooltipTriggerMode.tap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 15),
-        margin: const EdgeInsets.only(bottom: 5),
+        margin: margin ?? const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(40)),
             border: Border.all(color: Theme.of(context).colorScheme.primary)),

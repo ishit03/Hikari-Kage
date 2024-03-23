@@ -15,11 +15,18 @@ class CharactersList extends StatelessWidget {
         children: [
           Text(
             'Characters',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium
+                ?.copyWith(fontFamily: 'Caveat'),
+          ),
+          const SizedBox(
+            height: 8,
           ),
           SizedBox(
             height: 200,
             child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: charactersList?.length ?? 0,
                 itemBuilder: (context, index) {
@@ -37,17 +44,20 @@ class CharactersList extends StatelessWidget {
                         ),
                       ),
                       Flexible(
-                        child: Text(
-                          '${charactersList?[index].firstName} ${charactersList?[index].lastName}',
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelLarge,
+                        child: SizedBox(
+                          width: 70,
+                          child: Text(
+                            '${charactersList?[index].firstName} ${charactersList?[index].lastName}',
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
                         ),
                       ),
                       Flexible(
                           child: Text(
-                        '(${charactersList?[index].role})',
+                        '[${charactersList?[index].role}]',
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.labelLarge,

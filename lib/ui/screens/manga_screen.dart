@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hikari_kage/ui/widgets/general_widgets/hikari_kage_loader.dart';
 
 class MangaScreen extends StatelessWidget {
   const MangaScreen({super.key});
@@ -7,7 +8,7 @@ class MangaScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SizedBox(
       child: Center(
-        child: Text('Manga Section\nComing Soon...'),
+        child: HikariKageLoader(), //Text('Manga Section\nComing Soon...'),
       ),
     );
   }

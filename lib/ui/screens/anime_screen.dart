@@ -18,7 +18,10 @@ class AnimeScreen extends StatelessWidget {
         Center(
           child: Text(
             'Powered by MAL',
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontFamily: 'Caveat'),
           ),
         )
       ],

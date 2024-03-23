@@ -6,6 +6,7 @@ import 'package:hikari_kage/cubits/anime_search_cubit.dart';
 import 'package:hikari_kage/cubits/anime_search_state.dart';
 import 'package:hikari_kage/status.dart';
 import 'package:hikari_kage/ui/widgets/anime_search_widgets/search_list_view.dart';
+import 'package:hikari_kage/ui/widgets/general_widgets/hikari_kage_loader.dart';
 
 class AnimeSearch extends StatefulWidget {
   const AnimeSearch({super.key});
@@ -76,7 +77,7 @@ class _AnimeSearchState extends State<AnimeSearch> {
                 return Container();
               case Status.loading:
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: HikariKageLoader(),
                 );
 
               ///Search List To Be Implemented

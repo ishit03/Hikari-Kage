@@ -15,13 +15,22 @@ class SynopsisSection extends StatelessWidget {
           children: [
             Text(
               'Synopsis',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium
+                  ?.copyWith(fontFamily: 'Caveat'),
+            ),
+            const SizedBox(
+              height: 8,
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Text(
                 synopsisText ?? 'N/A',
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontStyle: FontStyle.italic),
                 textAlign: TextAlign.justify,
               ),
             ),

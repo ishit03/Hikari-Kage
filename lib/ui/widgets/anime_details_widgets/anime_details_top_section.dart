@@ -44,15 +44,18 @@ class TopSection extends StatelessWidget {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                width: 250,
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.headlineMedium,
-                  softWrap: true,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+              Flexible(
+                child: SizedBox(
+                  width: 250,
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                    softWrap: true,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
               Padding(
@@ -62,14 +65,16 @@ class TopSection extends StatelessWidget {
                   child: Wrap(
                     spacing: 5,
                     children: [
-                      CustomChip(
-                        text: '#$rank',
-                        tooltipText: 'Rank',
-                      ),
-                      CustomChip(
-                        text: '$mean',
-                        tooltipText: 'Mean Score',
-                      ),
+                      if (rank != null)
+                        CustomChip(
+                          text: '#$rank',
+                          tooltipText: 'Rank',
+                        ),
+                      if (mean != null)
+                        CustomChip(
+                          text: '$mean',
+                          tooltipText: 'Mean Score',
+                        ),
                       CustomChip(text: rating ?? 'N/A', tooltipText: 'Rating'),
                       CustomChip(
                         text: mediaType ?? 'N/A',

@@ -8,7 +8,7 @@ import 'package:hikari_kage/ui/screens/anime_screen.dart';
 import 'package:hikari_kage/ui/screens/anime_search.dart';
 import 'package:hikari_kage/ui/screens/manga_screen.dart';
 import 'package:hikari_kage/ui/screens/user_watch_list_screen.dart';
-import 'package:hikari_kage/ui/widgets/hikari_kage_bottom_nav.dart';
+import 'package:hikari_kage/ui/widgets/general_widgets/hikari_kage_bottom_nav.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -31,9 +31,17 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             'Hikari Kage',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge
+                ?.copyWith(fontFamily: 'Caveat'),
           ),
           actions: [
+            IconButton(
+                onPressed: () => context.read<ThemeModeCubit>().changeTheme(),
+                icon: (context.read<ThemeModeCubit>().state == Modes.light)
+                    ? const Icon(Icons.dark_mode_outlined, size: 20)
+                    : const Icon(Icons.light_mode_outlined, size: 20)),
             IconButton(
                 icon: const Icon(Icons.search, size: 20),
                 onPressed: () {
@@ -46,11 +54,6 @@ class HomeScreen extends StatelessWidget {
                                 child: child,
                               )));
                 }),
-            IconButton(
-                onPressed: () => context.read<ThemeModeCubit>().changeTheme(),
-                icon: (context.read<ThemeModeCubit>().state == Modes.light)
-                    ? const Icon(Icons.dark_mode_outlined, size: 20)
-                    : const Icon(Icons.light_mode_outlined, size: 20))
           ],
         ),
         body: BlocProvider(

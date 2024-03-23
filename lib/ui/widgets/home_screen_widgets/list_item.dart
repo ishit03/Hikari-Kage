@@ -16,7 +16,6 @@ class ListItem extends StatelessWidget {
                   animeId: anime.animeId,
                   backgroundImage: anime.largePictureUri)));
         },
-        overlayColor: MaterialStateProperty.all(Colors.black.withOpacity(0.1)),
         child: Column(
           children: [
             Expanded(
@@ -28,7 +27,7 @@ class ListItem extends StatelessWidget {
             ),
             Flexible(
               child: Container(
-                margin: const EdgeInsets.only(top: 10),
+                margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
                 child: Text(
                   anime.title,
                   maxLines: 2,

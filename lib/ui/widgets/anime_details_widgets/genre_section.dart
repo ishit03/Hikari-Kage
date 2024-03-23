@@ -18,12 +18,24 @@ class GenreSection extends StatelessWidget {
             children: [
               Text(
                 'Genres',
-                style: Theme.of(context).textTheme.headlineMedium,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium
+                    ?.copyWith(fontFamily: 'Caveat'),
+              ),
+              const SizedBox(
+                height: 8,
               ),
               Wrap(
                   children: (genreList != null)
                       ? genreList!.map((genre) {
-                          return CustomChip(text: genre);
+                          return CustomChip(
+                            text: genre,
+                            margin: const EdgeInsets.only(
+                              bottom: 5,
+                              right: 5,
+                            ),
+                          );
                         }).toList()
                       : [const CustomChip(text: 'N/A')])
             ],

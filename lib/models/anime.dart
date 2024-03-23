@@ -23,17 +23,17 @@ class Anime {
   factory Anime.fromJson(Map<String, dynamic> jsonData) => Anime(
       animeId: jsonData['id'] as int,
       title: jsonData['title'] as String,
-      synopsis: jsonData['synopsis'] as String,
-      genre: jsonData['genres'] as List<String>,
+      synopsis: jsonData['synopsis'] as String?,
+      genre: jsonData['genres'] as List<String>?,
       mediumPictureUri: jsonData['main_picture']['medium'] as String,
       largePictureUri: jsonData['main_picture']['large'] as String,
-      status: jsonData['status'] as String,
+      status: jsonData['status'] as String?,
       rating: (jsonData['rating'] as String?)?.toUpperCase() ?? 'N/A',
-      rank: jsonData['rank'] as int,
-      mean: jsonData['mean'] as double,
-      studio: jsonData['studios'] as String,
+      rank: jsonData['rank'] as int?,
+      mean: jsonData['mean'] as double?,
+      studio: jsonData['studios'] as String?,
       mediaType: (jsonData['media_type'] as String?)?.toUpperCase() ?? 'N/A',
-      characters: jsonData['characters'] as List<Character>);
+      characters: jsonData['characters'] as List<Character>?);
 
   @HiveField(0)
   late final int animeId;

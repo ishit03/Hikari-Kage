@@ -7,6 +7,7 @@ import 'package:hikari_kage/ui/widgets/anime_details_widgets/anime_details_top_s
 import 'package:hikari_kage/ui/widgets/anime_details_widgets/characters_list.dart';
 import 'package:hikari_kage/ui/widgets/anime_details_widgets/genre_section.dart';
 import 'package:hikari_kage/ui/widgets/anime_details_widgets/synopsis_section.dart';
+import 'package:hikari_kage/ui/widgets/general_widgets/hikari_kage_loader.dart';
 
 class AnimeDetails extends StatelessWidget {
   AnimeDetails(
@@ -22,20 +23,23 @@ class AnimeDetails extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
+          color: (currentTheme == Modes.light)
+              ? Colors.white.withOpacity(0.9)
+              : Colors.black.withOpacity(0.9),
           image: DecorationImage(
               image: NetworkImage(backgroundImage),
               fit: BoxFit.fill,
               colorFilter: ColorFilter.mode(
                   (currentTheme == Modes.light)
                       ? Colors.white.withOpacity(0.9)
-                      : Colors.black.withOpacity(0.9),
+                      : Colors.black.withOpacity(0.8),
                   BlendMode.srcATop))),
       child: FutureBuilder(
         future: AnimeRepo().fetchAnimeDetails(animeId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: HikariKageLoader(),
             );
           } else if (snapshot.hasData) {
             final animeData = snapshot.data!;
@@ -91,7 +95,10 @@ class AnimeDetails extends StatelessWidget {
         Center(
           child: Text(
             'Powered by MAL',
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontFamily: 'Caveat'),
           ),
         )
       ],
